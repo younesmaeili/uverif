@@ -60,11 +60,16 @@ public:
 				port_name == other.port_name && 
 				cell_ == other.cell_);
     }
-	inline unsigned int hash() const {
-		return mkhash(mkhash(hash_ops<RTLIL::IdString>::hash(mem_cell),hash_ops<RTLIL::Cell*>::hash(cell_) ),
-				mkhash(hash_ops<RTLIL::SigSpec>::hash(sig_name), hash_ops<RTLIL::IdString>::hash(port_name))
-				);
-	}
+    // mkhash fix
+        inline unsigned int hash() const {
+            Hasher h;
+            h = hash_ops<RTLIL::IdString>::hash_into(mem_cell, h);      
+            h = hash_ops<RTLIL::Cell*>::hash_into(cell_, h);           
+            h = hash_ops<RTLIL::SigSpec>::hash_into(sig_name, h);      
+            h = hash_ops<RTLIL::IdString>::hash_into(port_name, h);    
+            return (unsigned int)h.yield();
+        }
+
 };
 
 struct u_sig_cell {
@@ -76,11 +81,16 @@ struct u_sig_cell {
                 c == other.c && 
                 diff == other.diff);
     }
+    
+    // mkhash fix
     inline unsigned int hash() const {
-        return mkhash(
-            mkhash(hash_ops<int>::hash(diff), hash_ops<RTLIL::Cell*>::hash(c)),
-            hash_ops<RTLIL::SigSpec>::hash(s));
+        Hasher h;
+        h = hash_ops<int>::hash_into(diff, h);              
+        h = hash_ops<RTLIL::Cell*>::hash_into(c, h);       
+        h = hash_ops<RTLIL::SigSpec>::hash_into(s, h);       
+        return (unsigned int)h.yield();
     }
+
     inline string str() {
         return (c != nullptr ? c->name.str(): string(log_signal(s))) + " " + std::to_string(diff);
     }

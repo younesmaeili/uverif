@@ -182,16 +182,23 @@ private:
 		// outfile << "\"" <<  v_ << "\" [" << v_sty << "]; \n"; 
 		// outfile << "\"" << u_ << "\"->\"" << v_ << "\" [" << e_sty <<  "];\n";
 	}
-	struct node_info {
-		int dep;
-		bool write;
-		inline bool operator==(const node_info& other) const {
-			return (dep == other.dep && write == other.write);
-		}
-		inline unsigned int hash() const {
-			return mkhash(hash_ops<int>::hash(dep), hash_ops<int>::hash(write ? 1 : 0));
-		}
-	};
+	// fixing deprecated mkhash with the new hasher method
+        struct node_info {
+            int dep;
+            bool write;
+
+            inline bool operator==(const node_info& other) const {
+                return (dep == other.dep && write == other.write);
+            }
+
+            inline unsigned int hash() const {
+                Hasher h;
+                h = hash_ops<int>::hash_into(dep, h);                 
+                h = hash_ops<int>::hash_into(write ? 1 : 0, h);      
+                return h.yield();                                    
+            }
+        };
+
 	dict<string, pool<node_info>> loc_per_reg; // loc in dataflow depths write(T) / read(F)
 	
 public:
@@ -547,17 +554,19 @@ struct hbi_res {
 		1
 		);
 	}
-	inline unsigned int hash() const {
-		// return hash_ops<int>::hash(file_seqno); 
-		return mkhash(mkhash(
-			mkhash(hash_ops<int>::hash(file_seqno),hash_ops<int>::hash(hbi_type)),
-			mkhash(hash_ops<int>::hash(i1_idx),hash_ops<int>::hash(i2_idx)))
-		,
-		mkhash(
-			mkhash(hash_ops<string>::hash(i1_loc),hash_ops<string>::hash(i2_loc)),
-			hash_ops<int>::hash(samecore)
-		));
-	}
+      inline unsigned int hash() const {
+          Hasher h;
+
+          h = hash_ops<int>::hash_into(file_seqno, h);          
+          h = hash_ops<int>::hash_into(hbi_type, h);            
+          h = hash_ops<int>::hash_into(i1_idx, h);              
+          h = hash_ops<int>::hash_into(i2_idx, h);              
+          h = hash_ops<std::string>::hash_into(i1_loc, h);      
+          h = hash_ops<std::string>::hash_into(i2_loc, h);      
+          h = hash_ops<int>::hash_into(samecore, h);            
+          return (unsigned int)h.yield();
+      }
+
 };
 
 
