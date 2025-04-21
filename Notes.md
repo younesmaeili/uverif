@@ -3,4 +3,5 @@
 2. Again, in new TabbyCAD the **mkhash** function is no longer accepts more than one arguments. Please refer to `/home/$USER/tabby/share/yosys/include/kernel/hashlib.h`
 
 3. We have to fix hashing and for this purpose we should refer to [Hashing](https://github.com/YosysHQ/yosys/blob/main/docs/source/yosys_internals/hashing.rst) for more information.
-
+  a) util.h and dataflow.h require modification since they use **mkhash** and mkhash has been **deprecated** in TabbyCAD (refer to `/home/$USER/tabby/share/yosys/include/kernel/hashlib.h` line 287).
+  b) 
