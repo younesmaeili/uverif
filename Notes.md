@@ -12,4 +12,4 @@
 
 7. Directly accessing `initval.bits` is no longer allowed in newer yosys versions becasuse `bits` are private now. So for a fix we can store bits in a `std::vector<RTLIL::State>` first, then construct `RTLIL::Const` from it. I have modified the `util_verilogbackend.h` to have all of these updates.
 
-8. `FfData` struct has been changed in newer yosys versions. We should look into `/home/younes/tabby/share/yosys/include/kernel/ff.h` and find eqivalences of `has_d`, `has_en`, `pol_en`, `sig_en` and possibly more. The `util_verilogbackend.h` file should be modified based on this renaming that occured in new yosys versions.
+8. `FfData` struct has been changed in newer yosys versions. We should look into `/home/$USER/tabby/share/yosys/include/kernel/ff.h` and find eqivalences of `has_d`, `has_en`, `pol_en`, `sig_en` and possibly more. The `util_verilogbackend.h` file should be modified based on this renaming that occured in new yosys versions.
