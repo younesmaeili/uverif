@@ -2,5 +2,5 @@
 
 2. Again, in new TabbyCAD the **mkhash** function is no longer accepts more than one arguments. Please refer to `/home/$USER/tabby/share/yosys/include/kernel/hashlib.h`
 
-3. We have to fix hashing and for this purpose we should refer to [Hashing](https://github.com/YosysHQ/yosys/blob/main/docs/source/yosys_internals/hashing.rst) for more information:
+3. We have to fix hashing and for this purpose we should refer to [Hashing](https://github.com/YosysHQ/yosys/blob/main/docs/source/yosys_internals/hashing.rst) for more information.
 
