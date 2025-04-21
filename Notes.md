@@ -9,3 +9,5 @@
 5. I have replaced deprecated mkhash with new Hasher method fixing util.h and dataflow.h. Those files will be updated along with an instruction.
 
 6. The `util_verilogbackend.h` should be modified. Since older Yosys versions used direct `data.bits` member access, while newer versions require using `data.size()` and `data[i]` methods instead. So we should replace all `data.bits.size()` with `data.size()` and all `data.bits[i]` with `data[i]`.
+
+7. Directly accessing `initval.bits` is no longer allowed in newer yosys versions becasuse `bits` are private now. So for a fix we can store bits in a `std::vector<RTLIL::State>` first, then construct `RTLIL::Const` from it. I have modified the `util_verilogbackend.h` to have all of these updates.
