@@ -7,3 +7,5 @@
 4. (solved) `util.h` and `dataflow.h` in `/src_revised` require modification since they use **mkhash** and mkhash has been **deprecated** in TabbyCAD (refer to `/home/$USER/tabby/share/yosys/include/kernel/hashlib.h` line 287).
 
 5. I have replaced deprecated mkhash with new Hasher method fixing util.h and dataflow.h. Those files will be updated along with an instruction.
+
+6. The `util_verilogbackend.h` should be modified. Since older Yosys versions used direct `data.bits` member access, while newer versions require using `data.size()` and `data[i]` methods instead. So we should replace all `data.bits.size()` with `data.size()` and all `data.bits[i]` with `data[i]`.
