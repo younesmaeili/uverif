@@ -5,6 +5,7 @@
 #include "kernel/log.h"
 #include "kernel/sigtools.h"
 #include "kernel/ff.h"
+#include "kernel/yosys_common.h"
 #include <string>
 #include <sstream>
 #include <set>
@@ -173,7 +174,7 @@ void dump_const(std::ostream &f, const RTLIL::Const &data, int width = -1, int o
 {
 	bool set_signed = (data.flags & RTLIL::CONST_FLAG_SIGNED) != 0;
 	if (width < 0)
-		width = data.bits.size() - offset;
+		width = data.size() - offset;
 	if (width == 0) {
 		// See IEEE 1364-2005 Clause 5.1.14.
 		f << "{0{1'b0}}";
@@ -181,14 +182,14 @@ void dump_const(std::ostream &f, const RTLIL::Const &data, int width = -1, int o
 	}
 	if (nostr)
 		goto dump_hex;
-	if ((data.flags & RTLIL::CONST_FLAG_STRING) == 0 || width != (int)data.bits.size()) {
+	if ((data.flags & RTLIL::CONST_FLAG_STRING) == 0 || width != (int)data.size()) {
 		if (width == 32 && !no_decimal && !nodec) {
 			int32_t val = 0;
 			for (int i = offset+width-1; i >= offset; i--) {
-				log_assert(i < (int)data.bits.size());
-				if (data.bits[i] != State::S0 && data.bits[i] != State::S1)
+				log_assert(i < (int)data.size());
+				if (data[i] != State::S0 && data[i] != State::S1)
 					goto dump_hex;
-				if (data.bits[i] == State::S1)
+				if (data[i] == State::S1)
 					val |= 1 << (i - offset);
 			}
 			if (decimal)
@@ -203,8 +204,8 @@ void dump_const(std::ostream &f, const RTLIL::Const &data, int width = -1, int o
 				goto dump_bin;
 			vector<char> bin_digits, hex_digits;
 			for (int i = offset; i < offset+width; i++) {
-				log_assert(i < (int)data.bits.size());
-				switch (data.bits[i]) {
+				log_assert(i < (int)data.size());
+				switch (data[i]) {
 				case State::S0: bin_digits.push_back('0'); break;
 				case State::S1: bin_digits.push_back('1'); break;
 				case RTLIL::Sx: bin_digits.push_back('x'); break;
@@ -257,8 +258,8 @@ void dump_const(std::ostream &f, const RTLIL::Const &data, int width = -1, int o
 			if (width == 0)
 				f << stringf("0");
 			for (int i = offset+width-1; i >= offset; i--) {
-				log_assert(i < (int)data.bits.size());
-				switch (data.bits[i]) {
+				log_assert(i < (int)data.size());
+				switch (data[i]) {
 				case State::S0: f << stringf("0"); break;
 				case State::S1: f << stringf("1"); break;
 				case RTLIL::Sx: f << stringf("x"); break;
@@ -292,25 +293,25 @@ void dump_const(std::ostream &f, const RTLIL::Const &data, int width = -1, int o
 			f << stringf("\"");
 	}
 }
-
+//fixed
 void dump_reg_init(std::ostream &f, SigSpec sig)
 {
-	Const initval;
-	bool gotinit = false;
+    std::vector<RTLIL::State> bits;
+    bool gotinit = false;
 
-	for (auto bit : active_sigmap(sig)) {
-		if (active_initdata.count(bit)) {
-			initval.bits.push_back(active_initdata.at(bit));
-			gotinit = true;
-		} else {
-			initval.bits.push_back(State::Sx);
-		}
-	}
+    for (auto bit : active_sigmap(sig)) {
+        if (active_initdata.count(bit)) {
+            bits.push_back(active_initdata.at(bit));
+            gotinit = true;
+        } else {
+            bits.push_back(State::Sx);
+        }
+    }
 
-	if (gotinit) {
-		f << " = ";
-		dump_const(f, initval);
-	}
+    if (gotinit) {
+        f << " = ";
+        dump_const(f, RTLIL::Const(bits));  // Construct Const from vector
+    }
 }
 void dump_sigchunk(std::ostream &f, const RTLIL::SigChunk &chunk, bool no_decimal = false, int out_port = 0)
 {
