@@ -4,7 +4,7 @@
 #include "kernel/yosys.h"
 #include "kernel/sigtools.h"
 #include "kernel/celltypes.h"
-#include "backends/ilang/ilang_backend.h"
+#include "backends/rtlil/rtlil_backend.h"
 
 USING_YOSYS_NAMESPACE
 PRIVATE_NAMESPACE_BEGIN
