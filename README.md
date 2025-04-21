@@ -9,4 +9,4 @@ export PATH="/home/$USER/tabby/bin:$PATH"
 
 export YOSYSHQ_LICENSE="/home/$USER/Documents/tabby.lic"
 
-3. `source ~/.bashrc`
+2. `source ~/.bashrc`
