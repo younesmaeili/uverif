@@ -61,13 +61,12 @@ public:
 				cell_ == other.cell_);
     }
     // mkhash fix
-        inline unsigned int hash() const {
-            Hasher h;
-            h = hash_ops<RTLIL::IdString>::hash_into(mem_cell, h);      
-            h = hash_ops<RTLIL::Cell*>::hash_into(cell_, h);           
-            h = hash_ops<RTLIL::SigSpec>::hash_into(sig_name, h);      
-            h = hash_ops<RTLIL::IdString>::hash_into(port_name, h);    
-            return (unsigned int)h.yield();
+            [[nodiscard]] Hasher hash_into(Hasher h) const {
+            h.eat(mem_cell);
+            h.eat(cell_);
+            h.eat(sig_name);
+            h.eat(port_name);
+            return h;
         }
 
 };
@@ -83,12 +82,11 @@ struct u_sig_cell {
     }
     
     // mkhash fix
-    inline unsigned int hash() const {
-        Hasher h;
-        h = hash_ops<int>::hash_into(diff, h);              
-        h = hash_ops<RTLIL::Cell*>::hash_into(c, h);       
-        h = hash_ops<RTLIL::SigSpec>::hash_into(s, h);       
-        return (unsigned int)h.yield();
+        [[nodiscard]] Hasher hash_into(Hasher h) const {
+        h.eat(diff);       // hash the 'diff' (int) member
+        h.eat(c);          // hash the 'c' (RTLIL::Cell*) member
+        h.eat(s);          // hash the 's' (RTLIL::SigSpec) member
+        return h;
     }
 
     inline string str() {

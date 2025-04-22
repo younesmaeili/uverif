@@ -636,14 +636,14 @@ public:
                 auto cell = cellit.second;
                 bool ismem_ = ismem(cell);
                 bool isreg_ = isreg(cell);
-                fprintf(fptr_cell, "%d,%d,%s,%u\n", ismem_, isreg_, cell->name.str().c_str(),cell->hash());
+                fprintf(fptr_cell, "%d,%d,%s,%u\n", ismem_, isreg_, cell->name.str().c_str(),run_hash(cell->name.str()));
     #ifndef VPR_04_TEST
                 for (auto &s: invSigToNextCell[cell]) {
-                    fprintf(fptr, "u,%s,%u\n",log_signal(s), cell->hash());
+                    fprintf(fptr, "u,%s,%u\n",log_signal(s), run_hash(cell->name.str()));
                 }
                 
                 for (auto &s: cellToNextSig[cell]) {
-                    fprintf(fptr, "d,%u,%s\n", cell->hash(), log_signal(s));
+                    fprintf(fptr, "d,%u,%s\n", run_hash(cell->name.str()), log_signal(s));
                 }
     #else
                 for (auto &conn : cell->connections()) {
@@ -662,12 +662,12 @@ public:
                             if ( (
                                 ctrl && port_name != ID::S
                             ) || !ctrl )  {
-                                fprintf(fptr, "u,%s,%u\n",dump_sig_chunk(chunk, sigmap).c_str(), cell->hash());
+                                fprintf(fptr, "u,%s,%u\n",dump_sig_chunk(chunk, sigmap).c_str(), run_hash(cell->name.str()));
                             } else if (ctrl && port_name == ID::S) {
-                                fprintf(fptr_s, "u,%s,%u\n",dump_sig_chunk(chunk, sigmap).c_str(), cell->hash());
+                                fprintf(fptr_s, "u,%s,%u\n",dump_sig_chunk(chunk, sigmap).c_str(), run_hash(cell->name.str()));
                             }
                         } else if (cell->output(port_name)) {
-                            fprintf(fptr, "d,%u,%s\n", cell->hash(), dump_sig_chunk(chunk, sigmap).c_str());
+                            fprintf(fptr, "d,%u,%s\n", run_hash(cell->name.str()), dump_sig_chunk(chunk, sigmap).c_str());
                         }
                     }
                 }

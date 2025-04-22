@@ -191,11 +191,10 @@ private:
                 return (dep == other.dep && write == other.write);
             }
 
-            inline unsigned int hash() const {
-                Hasher h;
-                h = hash_ops<int>::hash_into(dep, h);                 
-                h = hash_ops<int>::hash_into(write ? 1 : 0, h);      
-                return h.yield();                                    
+            [[nodiscard]] Hasher hash_into(Hasher h) const {
+                h.eat(dep);
+                h.eat(write);
+                return h;
             }
         };
 
@@ -554,17 +553,15 @@ struct hbi_res {
 		1
 		);
 	}
-      inline unsigned int hash() const {
-          Hasher h;
-
-          h = hash_ops<int>::hash_into(file_seqno, h);          
-          h = hash_ops<int>::hash_into(hbi_type, h);            
-          h = hash_ops<int>::hash_into(i1_idx, h);              
-          h = hash_ops<int>::hash_into(i2_idx, h);              
-          h = hash_ops<std::string>::hash_into(i1_loc, h);      
-          h = hash_ops<std::string>::hash_into(i2_loc, h);      
-          h = hash_ops<int>::hash_into(samecore, h);            
-          return (unsigned int)h.yield();
+          [[nodiscard]] Hasher hash_into(Hasher h) const {
+          h.eat(file_seqno);          
+          h.eat(hbi_type);            
+          h.eat(i1_idx);              
+          h.eat(i2_idx);              
+          h.eat(i1_loc);      
+          h.eat(i2_loc);      
+          h.eat(samecore);            
+          return h;
       }
 
 };
