@@ -10,3 +10,6 @@ export PATH="/home/$USER/tabby/bin:$PATH"
 export YOSYSHQ_LICENSE="/home/$USER/Documents/tabby.lic"
 
 2. `source ~/.bashrc`
+
+# Generating uspec
+1. `make init` within `uverif` directory.
