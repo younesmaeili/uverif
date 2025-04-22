@@ -1,6 +1,6 @@
 # Required Packages
 1. `sudo apt update`
-2. `sudo apt install tcl8.6-dev clang gcc g++ build-essential`
+2. `sudo apt install tcl8.6-dev clang gcc g++ build-essential libedit-dev`
 
 # Setting Environment for TabbyCAD Suit
 1. `sudo nano ~/.bashrc`
