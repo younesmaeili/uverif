@@ -14,4 +14,10 @@
 
 8. **(solved)** `FfData` struct has been changed in newer yosys versions. We should look into `/home/$USER/tabby/share/yosys/include/kernel/ff.h` and find eqivalences of `has_d`, `has_en`, `pol_en`, `sig_en` and possibly more. The `util_verilogbackend.h` file should be modified based on this renaming that occured in new yosys versions.
 
-9. For naming consistency, in newer versions of Yosys `_en` has changed to `_ce` (clock enabled) so I did replace all `has_en`s with `has_ce`, all `pol_en`s with `pol_ce` and `sig_en`s with `sig_ce` thus resolving the issue. Moreover, `has_d` was redundant and it is completely removed from yosys. Because `sig_d` being present already implies it has a sync data input. So I replaced `has_d`s with `sig_d.is_fully_const()` to imply the same thing. 
+9. For naming consistency, in newer versions of Yosys `_en` has changed to `_ce` (clock enabled) so I did replace all `has_en`s with `has_ce`, all `pol_en`s with `pol_ce` and `sig_en`s with `sig_ce` thus resolving the issue. Moreover, `has_d` was redundant and it is completely removed from yosys. Because `sig_d` being present already implies it has a sync data input. So I replaced `has_d`s with `sig_d.is_fully_const()` to imply the same thing.
+
+10. Replaced `cell->hash()` with `run_hash(cell->name.str())` for correct modern implementation in `cdfg.h` file to fix many errors.
+
+11. I rewrote `mkhash` fixes to solve another four implementation errors. Changes are apparent in `util.h` and `dataflow.h`.
+
+12. **(FIX)**`make init` now works perfectly fine and we can generate `main.so` file in `build` directory successfully.
