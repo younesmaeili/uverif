@@ -85,21 +85,20 @@ sed -i "s~jg_hdls.f~${HDLF}~" $TCLF
 if [ "$gui" -eq "0" ]; then
     echo "[RUN_JG] no gui"
     if [ -z "$DISPLAY" ]; then
-        jc -fpv $TCLF -proj $DIR/jgsession
+        jc -allow_unsupported_OS -fpv $TCLF -proj $DIR/jgsession
     else 
-        jg -no_gui -fpv $TCLF -proj $DIR/jgsession
+        jg -allow_unsupported_OS -no_gui -fpv $TCLF -proj $DIR/jgsession
     fi
 else
     echo "[RUN_JG] gui"
-    echo "jg -fpv $TCL -proj $DIR/jgsession " 
+    echo "jg -allow_unsupported_OS -fpv $TCL -proj $DIR/jgsession " 
     sed -i "s~exit~#exit~" $TCLF
     if [ -z "$DISPLAY" ]; then
         echo "no x server"
         exit 1
     else 
-        jg -fpv $TCLF  -proj $DIR/jgsession & 
+        jg -allow_unsupported_OS -fpv $TCLF  -proj $DIR/jgsession & 
     fi 
 fi 
 cp $DIR/jgsession/sessionLogs/session_0/jg_session_0.log "${DIR}/${DUMPNAME}_jg.log"
 # next: python3 parse_summary.py 
-
