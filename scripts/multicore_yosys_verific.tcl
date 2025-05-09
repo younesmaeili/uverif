@@ -1,5 +1,5 @@
 # set PROP_PATH <path to verilog src>
-set PROP_PATH /home/multicore_vscale_rtl2uspec/src/main/verilog
+set PROP_PATH "./vscale/src/main/verilog"
 # set TOP_MOD <top design module name>
 set TOP_MOD vscale_sim_top
 set GETSTAT 0
@@ -69,8 +69,8 @@ if {$TEST == 1} {
 
     yosys memory -nomap -nordff; 
     yosys stat;
-    set INTRAHBI -intradone
-    set INTERHBI -interdone
+    set INTRAHBI -a
+    set INTERHBI -b
     yosys rtl2uspec_cdfg ${INTRAHBI} ${INTERHBI};
 
 }
