@@ -14,9 +14,10 @@ init:
 	mkdir -p build/sva/intra_hbi
 	mkdir -p build/sva/inter_hbi
 	mkdir -p build/dump
+	mkdir -p vscale/gensva
 
 	if [ ! -d "$(HEADER)" ]; then echo "no yosys header $(HEADER)"; false; fi 
-	if [ ! -d "/usr/include/tcl8.6" ]; then echo "no tcl\napt-get install tcl8.6-dev"; false; fi 
+	if [ ! -d "/usr/include/tcl8.6" ]; then echo "no tcl\apt install tcl8.6-dev"; false; fi 
 
  
 ./build/obj/$(SRC).so: $(SRCDIR)/$(SRC).cc $(SRCDIR)/cdfg.h $(SRCDIR)/design.h $(SRCDIR)/util.h
@@ -31,3 +32,4 @@ init:
 			-DYOSYS_ENABLE_COVER -o ./build/obj/$(SRC).so
 clean:
 	rm -rf ./build/obj/*
+	rm -rf ./vscale/gensva/
