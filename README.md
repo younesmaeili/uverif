@@ -24,4 +24,5 @@ export PATH="/home/$USER/jasper_2024.12/bin:$PATH"
 5. `python3 revised_script/intra_hbi.py`
 6. Move intra_hbi content in `uverif/vscale/gensva/intra_hbi` back to `uverif/build/sva/intra_hbi`.
 7. `cd uverif/` and `make inter_hbi`.
-8. then `cd vscale/` and `python3 revised_script/inter_hbi.py`
+8. then `cd vscale/` and `python3 revised_script/inter_hbi.py`.
+9. Move inter_hbi content in `uverif/vscale/gensva/inter_hbi` back to `uverif/build/sva/inter_hbi`.
