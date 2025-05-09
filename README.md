@@ -26,3 +26,4 @@ export PATH="/home/$USER/jasper_2024.12/bin:$PATH"
 7. `cd uverif/` and `make inter_hbi`.
 8. then `cd vscale/` and `python3 revised_script/inter_hbi.py`.
 9. Move inter_hbi content in `uverif/vscale/gensva/inter_hbi` back to `uverif/build/sva/inter_hbi`.
+10. To generate the final `uspec` model, `cd uverif/` and `make uspec`.
