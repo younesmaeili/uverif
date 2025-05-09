@@ -5,7 +5,7 @@ WARN_FLAG ?= -Wno-everything
 ifeq ($(WARN),true)
 	WARN_FLAG = "-Wall -Wextra"
 endif 
-HEADER=/home/younes/tabby/share/yosys/include
+HEADER=/home/$(shell echo $$USER)/tabby/share/yosys/include
 all: ./build/obj/$(SRC).so
 
 init: 
