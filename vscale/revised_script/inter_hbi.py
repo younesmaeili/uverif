@@ -224,7 +224,7 @@ for x, y in meta_dt.iterrows():
         fin_data[k1] = True
     print(res_)
     y['Result'] = res_
-    update_map_f = update_map_f.append(y)
+    update_map_f = pd.concat([update_map_f, pd.DataFrame([y])], ignore_index=True)
 update_map_f['Result'] = update_map_f['Result'].astype(str)
 update_map_f = update_map_f.astype(dtype=meta_dtypes)
 print(meta_dt.dtypes)
