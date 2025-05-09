@@ -1,7 +1,9 @@
 tclfile=./scripts/multicore_yosys_verific.tcl
 srcfile=main
-TARGET_DIR=./vscale/gensva
-SOURCE_DIR=./build/sva/intra_hbi
+TARGET_DIR1=./vscale/gensva
+SOURCE_DIR1=./build/sva/intra_hbi
+SOURCE_DIR2=./build/sva/inter_hbi
+
 export PATH := /coatcheck/src/:$(PATH)
 init:
 	@echo "============ initialization =================="
@@ -16,13 +18,14 @@ intra_hbi:
 	sed -i "s~set INTRAHBI .*~set INTRAHBI -a~" $(tclfile)
 	sed -i "s~set INTERHBI .*~set INTERHBI -b~" $(tclfile)
 	yosys -s ./scripts/run.ys -m ./build/obj/$(srcfile).so > uverif.log
-	cp -r $(SOURCE_DIR) $(TARGET_DIR)
+	cp -r $(SOURCE_DIR1) $(TARGET_DIR1)
 
 inter_hbi:
 	@echo "============ Iner HBI generation ============="
 	sed -i "s~set INTRAHBI .*~set INTRAHBI -intradone~" $(tclfile)
 	sed -i "s~set INTERHBI .*~set INTERHBI -b~" $(tclfile)
 	yosys -s ./scripts/run.ys -m ./build/obj/$(srcfile).so > uverif.log
+	cp -r $(SOURCE_DIR2) $(TARGET_DIR1)
 
 uspec:
 	@echo "============= Uarch generation ==============="
@@ -43,5 +46,4 @@ clean:
 	rm -r build/
 	rm -r rtlcheck/
 	rm -r check_res/ 
-
 
