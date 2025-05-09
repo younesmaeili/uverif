@@ -101,7 +101,7 @@ def parse_update(meta, res, res_eventual, idx):
             cnt_stats['global'] += 1
             pass_cnt_stats['global'] += (line[3] == "updated")
         
-        update_map_f = update_map_f.append(line)
+        update_map_f = pd.concat([update_map_f, pd.DataFrame([line])], ignore_index=True)
     
 
     print("result at" + meta + ".res")
