@@ -21,3 +21,5 @@
 11. I rewrote `mkhash` fixes to solve another four implementation errors. Changes are apparent in `util.h` and `dataflow.h`.
 
 12. **(FIX)**`make init` now works perfectly fine and we can generate `main.so` file in the `build` directory successfully.
+
+13. Many changes to `intra_hbi.py` and `RUN_JG.sh`. To fix some deprecated features of `pandas` and make jaspergold compatible with Ubuntu 22.04.
