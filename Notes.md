@@ -24,4 +24,6 @@
 
 13. Many changes to `intra_hbi.py` and `RUN_JG.sh`. To fix some deprecated features of `pandas` and make jaspergold compatible with Ubuntu 22.04.
 
-14. Modified the makefiles a bit to be more general and avoid unnecessary copy and paste. 
+14. Modified the makefiles a bit to be more general and avoid unnecessary copy and paste.
+
+15. Modified `inter_hbi.py` as well to fix deprecated `.apprend()` in pandas.
