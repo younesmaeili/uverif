@@ -19,6 +19,6 @@ export PATH="/home/$USER/jasper_2024.12/bin:$PATH"
 # Generating uspec
 1. `make init` within `uverif` directory.
 2. `make intra_hbi`
-3. `cd /vscale`
+3. `cd vscale/`
 4. `chmod +x RUN_JG.sh`
 5. `python3 revised_script/intra_hbi.py`
