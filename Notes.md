@@ -22,7 +22,7 @@
 
 12. **(FIX)**`make init` now works perfectly fine and we can generate `main.so` file in the `build` directory successfully.
 
-13. Many changes to `intra_hbi.py` and `RUN_JG.sh`. To fix some deprecated features of `pandas` and make jaspergold compatible with Ubuntu 22.04.
+13. Many changes to `intra_hbi.py` and `RUN_JG.sh`. To fix some deprecated features of `pandas` and make jaspergold able to run on Ubuntu 22.04.
 
 14. Modified the makefiles a bit to be more general and avoid unnecessary copy and paste.
 
