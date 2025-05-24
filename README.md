@@ -3,7 +3,7 @@
 2. `sudo apt install tcl8.6-dev clang gcc g++ build-essential libedit-dev libreadline-dev`
 3. Also `pandas` and `numpy`.
 
-# Setting Environment for TabbyCAD Suit and JasperGold
+# Setting Environment for TabbyCAD and JasperGold
 1. `sudo nano ~/.bashrc`
    
 export PATH="/home/$USER/tabby/bin:$PATH"
